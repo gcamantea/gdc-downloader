@@ -1,12 +1,17 @@
-# Usage: 
-# $ ruby gdc-downloader.rb 'http://evt.dispeak.com/ubm/gdc/sf17/player.html?xml=846277_FNFH.xml&token=26d5b700a93b04d4de020'
-
 require 'net/http'
 require 'nokogiri'
 require 'uri'
 require 'cgi'
 
 player_url = ARGV[0]
+
+if (player_url.nil?)
+  puts "Usage: ruby gdc-downloader.rb '<URL>'"
+  puts "Get <URL> from the page source of your video at the GDC Vault website. Look for 'player.html'"
+  puts "Example: ruby gdc-downloader.rb 'http://evt.dispeak.com/ubm/gdc/sf17/player.html?xml=846277_FNFH.xml&token=26d5b700a93b04d4de020'"
+  exit 1
+end
+
 uri = URI(player_url)
 params = CGI::parse(uri.query)
 split = uri.path.split('/')
